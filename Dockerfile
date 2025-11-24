@@ -4,8 +4,15 @@
 FROM cicirello/alpine-plus-plus:latest
 
 RUN apk add --no-cache \
-  python3 \
-  py3-pip \
+  coreutils \
+  findutils \
+  sed \
+  git \
   curl \
   ripgrep \
-  jq
+  jq \
+  fd \
+  tree \
+  python3 \
+  py3-pip \
+  pytest
