@@ -1,0 +1,5 @@
+#!/usr/bin/env fish
+
+. ~/.fish/config.fish.1-functions.fish
+
+show_cmd docker build . -t llmsafe
