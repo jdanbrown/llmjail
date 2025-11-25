@@ -3,16 +3,20 @@
 
 FROM cicirello/alpine-plus-plus:latest
 
+ARG GH_TOKEN
+ENV GH_TOKEN=$GH_TOKEN
+
 RUN apk add --no-cache \
   coreutils \
-  findutils \
-  sed \
-  git \
   curl \
-  ripgrep \
-  jq \
   fd \
-  tree \
-  python3 \
+  findutils \
+  git \
+  github-cli \
+  jq \
   py3-pip \
-  pytest
+  pytest \
+  python3 \
+  ripgrep \
+  sed \
+  tree

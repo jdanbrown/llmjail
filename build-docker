@@ -2,4 +2,4 @@
 
 . ~/.fish/config.fish.1-functions.fish
 
-show_cmd docker build . -t llmsafe
+show_cmd docker build . -t llmsafe --build-arg GH_TOKEN="$GH_TOKEN"
