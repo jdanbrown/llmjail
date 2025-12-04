@@ -1,3 +1,0 @@
-#!/usr/bin/env fish
-
-DOCKER_OPTS=-it llmsafe

@@ -1,9 +1,17 @@
 #!/usr/bin/env fish
 
-# To use a persistent machine
-# orb run bash $argv
+# Use show_cmd to debug
+. ~/.fish/config.fish.1-functions.fish
 
-# To use a one-shot docker run
+set SHELL '/usr/bin/fish'
+
+if isatty
+    set DOCKER_OPTS "$DOCKER_OPTS -it"
+end
+
+# I think I want `docker run`, but maybe interesting to consider `orb run` in the future:
+#   - `docker run` -- use a one-shot container (fresh state for each llm call)
+#   - `orb run` -- use a persistent machine (persistent fs between llm calls)
 docker run \
     --rm \
     -v /tmp:/tmp \
@@ -11,7 +19,7 @@ docker run \
     -v "$HOME/.gitconfig":"/root/.gitconfig":ro \
     -v "$HOME/.gitignore":"/root/.gitignore":ro \
     -w "$PWD" \
-    $DOCKER_OPTS \
+    ([ -n "$DOCKER_OPTS" ] && string split -- ' ' (string trim -- $DOCKER_OPTS)) \
     llmsafe \
-    /bin/bash \
+    "$SHELL" \
     $argv
