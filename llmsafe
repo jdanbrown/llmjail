@@ -9,13 +9,6 @@ if isatty
     set DOCKER_OPTS "$DOCKER_OPTS -it"
 end
 
-# HACK For opencode: Swap `-c -l <cmd>` -> `-l -c <cmd>`, because `-c -l` doesn't work with fish
-#   - Safe to remove after this PR is merged:
-#       - https://github.com/sst/opencode/pull/5452 Shell: No -l in fallback, for max compatibility (2025-12-12)
-if [ "$argv[1]" = '-c' ] && [ "$argv[2]" = '-l' ]
-    set argv[1..2] '-l' '-c'
-end
-
 # I think I want `docker run`, but maybe interesting to consider `orb run` in the future:
 #   - `docker run` -- use a one-shot container (fresh state for each llm call)
 #   - `orb run` -- use a persistent machine (persistent fs between llm calls)
