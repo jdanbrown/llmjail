@@ -17,9 +17,11 @@ WORKDIR "/root"
 ARG GH_TOKEN
 ENV GH_TOKEN=$GH_TOKEN
 
+# Run `apt update` separately for faster iteration
+# Run `apt update` again with `apt install`, to avoid stale package caches on `apt install`
 # Don't clean up after `apt update`, since it makes interactive docker dev a pain
 RUN apt update
-RUN apt install -y --no-install-recommends \
+RUN apt update && apt install -y --no-install-recommends \
   coreutils \
   curl \
   eza \
@@ -30,6 +32,8 @@ RUN apt install -y --no-install-recommends \
   gh \
   jq \
   just \
+  nodejs \
+  npm \
   python-is-python3 \
   python3 \
   python3-pip \
