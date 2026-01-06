@@ -34,6 +34,7 @@ RUN apt update && apt install -y --no-install-recommends \
   just \
   nodejs \
   npm \
+  pipx \
   python-is-python3 \
   python3 \
   python3-pip \
@@ -51,7 +52,8 @@ RUN pip install --no-cache-dir --break-system-packages \
   glances \
   httpie \
   ruff \
-  pytest
+  pytest \
+  uv
 
 # Swift packages
 RUN wget https://github.com/nicklockwood/SwiftFormat/releases/download/0.58.7/swiftformat_linux.zip \
