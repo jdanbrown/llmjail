@@ -13,9 +13,13 @@
 FROM swift:6.1-noble
 
 WORKDIR "/root"
+ENV HOME="/root"
 
 ARG GH_TOKEN
 ENV GH_TOKEN=$GH_TOKEN
+
+ARG FLY_API_TOKEN
+ENV FLY_API_TOKEN=$FLY_API_TOKEN
 
 # Run `apt update` separately for faster iteration
 # Run `apt update` again with `apt install`, to avoid stale package caches on `apt install`
@@ -62,3 +66,10 @@ RUN wget https://github.com/nicklockwood/SwiftFormat/releases/download/0.58.7/sw
  && mv swiftformat /usr/local/bin/ \
  && chmod a+x /usr/local/bin/swiftformat \
  && rm -rf swiftformat_linux.zip
+
+# fly.io
+# - https://fly.io/docs/flyctl/install/
+# - idk why it doesn't have an apt package :/
+RUN curl -L https://fly.io/install.sh >/tmp/fly-install.sh && bash /tmp/fly-install.sh --non-interactive
+ENV FLYCTL_INSTALL="$HOME/.fly"
+ENV PATH="$FLYCTL_INSTALL/bin:$PATH"
