@@ -12,12 +12,16 @@ end
 # I think I want `docker run`, but maybe interesting to consider `orb run` in the future:
 #   - `docker run` -- use a one-shot container (fresh state for each llm call)
 #   - `orb run` -- use a persistent machine (persistent fs between llm calls)
+#   - Make project rw so llms can do git operations (e.g. `git add`, `git commit`)
+#   - Include minimal ~/.ssh/ files so llms can `git push` to github
 docker run \
     --rm \
     -v /tmp:/tmp \
-    -v "$PWD":"$PWD":ro \
+    -v "$PWD":"$PWD":rw \
     -v "$HOME/.gitconfig":"/root/.gitconfig":ro \
     -v "$HOME/.gitignore":"/root/.gitignore":ro \
+    -v "$HOME/.ssh/id_rsa":"/root/.ssh/id_rsa":ro \
+    -v "$HOME/.ssh/known_hosts":"/root/.ssh/known_hosts":ro \
     -w "$PWD" \
     ([ -n "$DOCKER_OPTS" ] && string split -- ' ' (string trim -- $DOCKER_OPTS)) \
     llmsafe \
