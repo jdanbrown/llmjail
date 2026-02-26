@@ -4,6 +4,6 @@
 
 set FLY_API_TOKEN "$(cat ~/.fly/config.yml | yq .access_token)"
 
-show_cmd docker build . -t llmsafe \
+show_cmd docker build . -t llmjail \
     --build-arg GH_TOKEN="$GH_TOKEN" \
     --build-arg FLY_API_TOKEN="$FLY_API_TOKEN"
