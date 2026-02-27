@@ -60,7 +60,7 @@ RUN pip install --no-cache-dir --break-system-packages \
   uv
 
 # Swift packages
-RUN wget https://github.com/nicklockwood/SwiftFormat/releases/download/0.58.7/swiftformat_linux.zip \
+RUN wget https://github.com/nicklockwood/SwiftFormat/releases/download/0.59.1/swiftformat_linux.zip \
  && unzip swiftformat_linux.zip \
  && mv swiftformat_linux swiftformat \
  && mv swiftformat /usr/local/bin/ \
