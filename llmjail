@@ -24,6 +24,6 @@ docker run \
     -v "$HOME/.ssh/known_hosts":"/root/.ssh/known_hosts":ro \
     -w "$PWD" \
     ([ -n "$DOCKER_OPTS" ] && string split -- ' ' (string trim -- $DOCKER_OPTS)) \
-    llmsafe \
+    llmjail \
     "$SHELL" \
     $argv
