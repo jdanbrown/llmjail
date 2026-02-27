@@ -59,6 +59,10 @@ RUN pip install --no-cache-dir --break-system-packages \
   pytest \
   uv
 
+# Node packages
+RUN npm -g install \
+  pyright
+
 # Swift packages
 RUN wget https://github.com/nicklockwood/SwiftFormat/releases/download/0.59.1/swiftformat_linux.zip \
  && unzip swiftformat_linux.zip \
