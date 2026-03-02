@@ -30,8 +30,6 @@ RUN apt update && apt install -y --no-install-recommends \
   gh \
   jq \
   just \
-  nodejs \
-  npm \
   pipx \
   python-is-python3 \
   python3 \
@@ -40,10 +38,19 @@ RUN apt update && apt install -y --no-install-recommends \
   sed \
   swift \
   tree \
-  wget
+  wget \
+  xz-utils
 
 # Ubuntu installs fd as fdfind, so symlink it as fd
 RUN ln -s /usr/bin/fdfind /usr/local/bin/fd
+
+# Install node
+# - This is apparently the typical way to do it 🤷
+# - Set ARCH dynamically (arm64 for docker on macos/apple, amd64 for linux/intel)
+ARG NODE_VERSION=24.14.0
+RUN ARCH=$(dpkg --print-architecture | sed 's/amd64/x64/') \
+  && curl -fsSL "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-${ARCH}.tar.xz" \
+  | tar -xJ --strip-components=1 -C /usr/local
 
 # Python packages
 RUN pip install --no-cache-dir --break-system-packages \
