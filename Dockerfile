@@ -20,6 +20,7 @@ ENV HOME="/root"
 # Don't clean up after `apt update`, since it makes interactive docker dev a pain
 RUN apt update
 RUN apt update && apt install -y --no-install-recommends \
+  bfs \
   coreutils \
   curl \
   eza \
