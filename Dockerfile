@@ -30,7 +30,6 @@ RUN apt update && apt install -y --no-install-recommends \
   git \
   gh \
   jq \
-  just \
   pipx \
   python-is-python3 \
   python3 \
@@ -79,6 +78,10 @@ RUN wget https://github.com/nicklockwood/SwiftFormat/releases/download/0.60.0/sw
 RUN curl -L https://fly.io/install.sh >/tmp/fly-install.sh && bash /tmp/fly-install.sh --non-interactive
 ENV FLYCTL_INSTALL="$HOME/.fly"
 ENV PATH="$FLYCTL_INSTALL/bin:$PATH"
+
+# just
+# - Install manually because `apt install just` gets a really old version (e.g. 1.21.0 instead of 1.46.0)
+RUN curl --proto '=https' --tlsv1.2 -sSf https://just.systems/install.sh | bash -s -- --to /usr/local/bin
 
 # Args -> env/secrets
 ARG GH_TOKEN
