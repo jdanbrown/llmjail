@@ -9,6 +9,11 @@ if isatty
     set DOCKER_OPTS "$DOCKER_OPTS -it"
 end
 
+# HACK (1/2) Clean up empty dirs on host left behind by -v
+#   - Set vars to use below, on exit
+if [ ! -d "$PWD/.venv" ]; set rmdir_venv 1; end
+if [ ! -d "$PWD/node_modules" ]; set rmdir_node_modules 1; end
+
 # I think I want `docker run`, but maybe interesting to consider `orb run` in the future:
 #   - `docker run` -- use a one-shot container (fresh state for each llm call)
 #   - `orb run` -- use a persistent machine (persistent fs between llm calls)
@@ -30,3 +35,11 @@ docker run \
     llmjail \
     "$SHELL" \
     $argv
+
+# HACK (2/2) Clean up empty dirs on host left behind by -v
+#   - Else we'll leave behind empty .venv/ + node_modules/ dirs everywhere we run llmjail
+#   - idk a better way to avoid this
+set -l docker_run_status $status
+if [ -n "$rmdir_venv" ]; rmdir "$PWD/.venv" 2>/dev/null; end
+if [ -n "$rmdir_node_modules" ]; rmdir "$PWD/node_modules" 2>/dev/null; end
+exit $docker_run_status
